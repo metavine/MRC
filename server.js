@@ -3,10 +3,10 @@ var app = require('http').createServer(handler),
   parser = new require('xml2json'),
   fs = require('fs');
 
-// creating the server ( localhost:8000 )
-app.listen(8000);
+// creating the server ( localhost:9999 )
+app.listen(9999);
 
-console.log('server listening on localhost:8000');
+console.log('server listening on localhost:9999');
 
 // on server started we can load our client.html page
 function handler(req, res) {
