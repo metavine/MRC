@@ -1,0 +1,4 @@
+#!/bin/bash
+
+npm install xml2json
+npm install socket.io
