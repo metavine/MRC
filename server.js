@@ -8,7 +8,7 @@ app.listen(9999);
 
 console.log('server listening on localhost:9999');
 
-// on server started we can load our client.html page
+// serving html to the web client
 function handler(req, res) {
   fs.readFile(__dirname + '/client.html', function(err, data) {
     if (err) {
@@ -21,11 +21,47 @@ function handler(req, res) {
   });
 }
 
-// creating a new websocket to keep the content updated without any AJAX request
+// maintain a request table for whom is requesting what
+
+// creating a new websocket then wait for connection
 io.sockets.on('connection', function(socket) {
-  console.log(__dirname);
+    
+  // 1. to see who is connecting
+  console.log("connection attempted: " + socket.id);
+  
+  // test message
+  socket.on('test', function(data) {
+      console.log("test message recieved.");
+  });
+  
+  // 2. accept client registragion
+  // 2.1 web client
+  socket.on('register', function(data) {
+      
+      console.log("client " + data.id + " registering");
+      
+      if (data.type == 0) {
+         console.log("Metavine app connected: " + data.name);
+      
+      }
+      else if (data.type == 1) {
+            // 2.2 mrc client
+            // 
+            // TODO, verify mrc
+        console.log("MRC connected: " + data.name);
+      }
+  });
+
+  socket.on('query-table', function(msg) {
+
+  });
+  
+  // OK, wait for a while for the client registration
+  // if it is not authorised client we disconnect it
+  // socket.disconnect();
+  
   // watching the xml file
-  fs.watchFile(__dirname + '/example.xml', function(curr, prev) {
+/*  fs.watchFile(__dirname + '/example.xml', function(curr, prev) {
     // on file change we can read the new xml
     fs.readFile(__dirname + '/example.xml', function(err, data) {
       if (err) throw err;
@@ -34,6 +70,6 @@ io.sockets.on('connection', function(socket) {
       // send the new data to the client
       socket.volatile.emit('notification', json);
     });
-  });
+  });*/
 
 });

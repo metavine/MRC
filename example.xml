@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <test>
-    <sample>Tired. Tried it again. Really? WTH? It works. "No way".</sample>
+    <sample>
+	Tired. Tried it again. Really? WTH? It works. "No way". Cool
+	No, not again.
+	This list will go on and on.
+    </sample>
 </test>
