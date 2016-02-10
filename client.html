@@ -48,14 +48,14 @@
     });
     </script>
     
-    <div>View tables stored on Eric's Mac
+    <div ng-app="">View SQLite databases stored on Eric's Mac
         <br>
         <br>
         <div>
         <select name="singleSelect" id="singleSelect" ng-model="data.singleSelect">
-        <option value="">---Please select---</option> <!-- not selected / blank option -->
-        <option value="{{data.option1}}">Table 1</option> <!-- interpolation -->
-        <option value="option-2">Table 2</option>
+            <option value="">---Please select database ---</option> <!-- not selected / blank option -->
+            <option value="{{data.option1}}">Database 1</option> <!-- interpolation -->
+            <option value="option-2">Database 2</option>
         </select>
         </div>
         

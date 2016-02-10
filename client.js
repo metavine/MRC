@@ -1,5 +1,7 @@
 var io = require('socket.io-client');
 
+var client = {type:1, id:2, name:"mrc-prototype"};
+
 // 1. connect to Metavine server
 var socket = io.connect('https://ericdev.metavine.com/');
 
@@ -7,9 +9,36 @@ socket.emit('test', "");
 
 // 2. register mrc client
 // TODO
-socket.emit('register', {type:1, id:2, name:"mrc-prototype"});
+socket.emit('register', client);
 
-// 2. verify client, make sure it is a legit client that is authenticated
+// 3. verify client, make sure it is a legit client that is authenticated
+// TODO
+
+// 4. events
+socket.on('mrc-query', function (data) {
+    
+    var json = null;
+    var ret = 1;
+    
+    // query databases
+    if (data.type == 0) {
+        
+    }
+    // query tables
+    else if (data.type == 1) {
+        
+    }
+    // query with sql
+    else if (data.type = 2) {
+        
+    }
+    else {
+        ret = 0;
+        json = "{result: \"error - unknown query type\"}";
+    }
+    
+    socket.emit("mrc-result", {success:ret, json:json});
+});
 /*// on every message recived we print the new datas inside the #container div
 socket.on('notification', function (data) {
     // convert the json string into a valid javascript object
