@@ -1,0 +1,3 @@
+== Server / Client
+
+Server/client are relative terms. Their roles can be reversed, which means client could be a server, and server can act as a client.

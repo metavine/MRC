@@ -39,12 +39,18 @@
     
     // 3.2 waiting for displaying data from remote client (yes, the real one)
     // on every message recived we print the new datas inside the #container div
-    socket.on('notification', function (data) {
+/*    socket.on('notification', function (data) {
         // convert the json string into a valid javascript object
         var _data = JSON.parse(data);
 
         $('#container').html(_data.test.sample);
         $('time').html('Last Update:' + new Date());
+    });*/
+    socket.on('app-result', function (data) {
+        var _data = JSON.parse(data.json);
+        
+        // $('#container').html(_data);
+        $('#singleSelect').append($('<option>').text(msg));
     });
     </script>
     

@@ -10,6 +10,8 @@ socket.emit('test', "");
 socket.emit('register', {type:1, id:2, name:"mrc-prototype"});
 
 // 2. verify client, make sure it is a legit client that is authenticated
+socket.on
+
 /*// on every message recived we print the new datas inside the #container div
 socket.on('notification', function (data) {
     // convert the json string into a valid javascript object
