@@ -1,24 +1,31 @@
 <html>
     <head>
-    <!-- 
-     * Author:      Gianluca Guarini
-     * Contact:     gianluca.guarini@gmail.com
-     * Website:     http://www.gianlucaguarini.com/
-     * Twitter:     @gianlucaguarini
-    -->
-        <title>Push notification server</title>
+    <!--
+    	@author: Eric Tang
+    	
+    	created for Metavine to on-premise systems integration demo 
+     -->
+        <title>Metavine Remote Client Demo</title>
     </head>
     <body>
         <time></time>
-        <div id="container">Try to change your xml data to update this content</div>
+        <div id="container"></div>
     <!--
     <script src="socket.io/socket.io.js"></script>
     -->
+    <script type="text/javascript"
+        src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
     <script src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
     <script>
-    // creating a new websocket
+    
+    // 1. creating a new websocket
     var socket = io.connect('https://ericdev.metavine.com/');
+    
+    // 2. register web client
+    // TODO
+    
+    // 3. waiting for displaying data from remote client (yes, the real one)
     // on every message recived we print the new datas inside the #container div
     socket.on('notification', function (data) {
         // convert the json string into a valid javascript object
@@ -28,5 +35,15 @@
         $('time').html('Last Update:' + new Date());
     });
     </script>
+    
+    <div>View tables stored on Eric's Mac
+    <br>
+    <br>
+    <select name="singleSelect" id="singleSelect" ng-model="data.singleSelect">
+      <option value="">---Please select---</option> <!-- not selected / blank option -->
+      <option value="{{data.option1}}">Table 1</option> <!-- interpolation -->
+      <option value="option-2">Table 2</option>
+    </select>
+    </div>
     </body>
 </html>
