@@ -33,6 +33,8 @@ socket.on('mrc-query', function (query) {
     if (query.type == 0) {
         // hard coded for testing
         var database_dir = '/Users/eric/workspace/metavine/metavine-mrc/db/files';
+        console.log("loading database from: " + database_dir);
+        
         glob(database_dir + "/*", 'nonull', function(er, files) {
             json = "{result:{";
             json += "database:[" + files.join(",") + "]"; 
