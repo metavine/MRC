@@ -1,4 +1,5 @@
 var io = require('socket.io-client');
+var glob = require('glob');
 
 var client = {type:1, id:2, name:"mrc-prototype"};
 
@@ -14,27 +15,36 @@ socket.emit('register', client);
 // 3. verify client, make sure it is a legit client that is authenticated
 // TODO
 
-<<<<<<< HEAD
-// 2. verify client, make sure it is a legit client that is authenticated
-socket.on
-
-=======
 // 4. events
-socket.on('mrc-query', function (data) {
+// this is the end point of data flow, only accepting data request then
+// return results
+socket.on('mrc-query', function (query) {
     
-    var json = null;
+    console.log("recieve query: " + query.type + ", " + query.host + ", " + query.info);
+    
+    // TODO
+    // check the requesting host, make sure it comes to the right place
+    // if (query.host == '')
+    
+    var json = "{result:{database:[]}}";
     var ret = 1;
     
     // query databases
-    if (data.type == 0) {
-        
+    if (query.type == 0) {
+                // hard coded for testing
+        var database_dir = '/Users/eric/workspace/metavine/metavine-mrc/db/files';
+        glob(database_dir + "/*", 'nonull', function(er, files) {
+            json = "{result:{";
+            json += "database:[" + files.join(",") + "]"; 
+            json += "}";
+        });
     }
     // query tables
-    else if (data.type == 1) {
+    else if (query.type == 1) {
         
     }
     // query with sql
-    else if (data.type = 2) {
+    else if (query.type = 2) {
         
     }
     else {
@@ -44,7 +54,6 @@ socket.on('mrc-query', function (data) {
     
     socket.emit("mrc-result", {success:ret, json:json});
 });
->>>>>>> e5d3a8208fac6fdfbec0f45ab6cdc82e4cd61134
 /*// on every message recived we print the new datas inside the #container div
 socket.on('notification', function (data) {
     // convert the json string into a valid javascript object

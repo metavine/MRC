@@ -1,3 +1,12 @@
-== Server / Client
+== Server / Client ==
 
 Server/client are relative terms. Their roles can be reversed, which means client could be a server, and server can act as a client.
+
+== Node.js Database Libraries ==
+1. General
+* tedious
+
+2. Drivers
+* node-mysql
+* node-pg
+* node-sqlite3
