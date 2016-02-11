@@ -36,7 +36,8 @@
     //     * load-table, table name, all records limits 50
     //     * query-table, sql
     //     * show-table, table result in json
-    
+    socket.emit("mrc-query", {type:0, host:"eric-s-mac"});
+        
     // 3.2 waiting for displaying data from remote client (yes, the real one)
     // on every message recived we print the new datas inside the #container div
 /*    socket.on('notification', function (data) {
