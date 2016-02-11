@@ -24,7 +24,10 @@ function handler(req, res) {
 // maintain a request table for whom is requesting what
 // 1 success, 
 var result = {success:0, json:"{result:\"\"}"};
-
+          
+var app_client_id = null;
+var mrc_client_id = null;
+    
 // creating a new websocket then wait for connection
 io.sockets.on('connection', function(socket) {
     
@@ -40,34 +43,48 @@ io.sockets.on('connection', function(socket) {
   // 2.1 web client
   socket.on('register', function(data) {
       
-      console.log("client " + data.id + " registering");
+      console.log("client " + data.name + "(" + data.id + ") registering");
       
       if (data.type == 0) {
-         console.log("Metavine app connected: " + data.name);
-      
+         app_client_id = socket.id;
+         
+         console.log("Metavine app connected: " + app_client_id + ", " + data.name);
       }
       else if (data.type == 1) {
             // 2.2 mrc client
             // 
             // TODO, verify mrc
-        console.log("MRC connected: " + data.name);
+        // send out a test message
+                
+        mrc_client_id = socket.id;
+        
+        socket.volatile.emit('mrc-query', {type:99, host:"test", info:"hello there"});
+        
+        io.to(mrc_client_id).emit('mrc-query', {type:99, host:"test", info:"now you are connected with the App"});
+
+        console.log("MRC connected: " + mrc_client_id + ", " + data.name);
       }
   });
 
   // on recieving query from web client / Metavine App
   socket.on('app-query', function(query) {
-      // database
-      if (query.type == 0) {
-          socket.emit('mrc-query', query);
-      }
-      else if (query.type ==12) {
+      
+      console.log("recieve app query, and pass it on to MRC");
+      io.volatile.emit('mrc-query', {type:100, host:"test", info:"wake up dudes, are you there?"});
+      
+      // at the moment we only X types of query
+      if (query.type >= 0 && query.type <=5) {
+          console.log("query type verified, senting it to " + mrc_client_id);
           
+          io.to(mrc_client_id).emit('mrc-query', query);
       }
       else {
+          console.log("unknown query type.");
+
           var _json = "{\"result\": \"error - unknown query type\"}";
           result.json = _json;
           // do nothing
-          socket.volatile.emit("app-result", result);
+          io.to(app_client_id).emit("app-result", result);
       }
   });
   
@@ -86,7 +103,7 @@ io.sockets.on('connection', function(socket) {
       }*/
       //TODO
       // reponse to the right web client 
-      socket.volatile.emit("app-result", result);
+      io.to(app_client_id).emit("app-result", result);
   });
   
   // OK, wait for a while for the client registration

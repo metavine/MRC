@@ -18,6 +18,8 @@
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
     <script src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
     <script>
+    // definitions
+    var client = {type:1, id:2, name:"web-prototype"};
     
     // 1. creating a new websocket
     var socket = io.connect('https://ericdev.metavine.com/');
@@ -36,7 +38,7 @@
     //     * load-table, table name, all records limits 50
     //     * query-table, sql
     //     * show-table, table result in json
-    socket.emit("mrc-query", {type:0, host:"eric-s-mac"});
+    
         
     // 3.2 waiting for displaying data from remote client (yes, the real one)
     // on every message recived we print the new datas inside the #container div
@@ -52,7 +54,13 @@
         var _data = JSON.parse(result.json);
         
         // $('#container').html(_data);
-        $('#singleSelect').append($('<option>').text(_data));
+        $('#info').html(result.json);
+        //$('#singleSelect').append($('<option>').text(_data));
+    });
+    
+    $( document ).ready(function() {
+        console.log( "ready!" );
+        socket.emit("app-query", {type:0, host:"eric-s-mac", info:"can I get some database info please"});
     });
     </script>
     
@@ -68,8 +76,10 @@
         </select>
         </div>
         
-        <div id="table">
-            
+        <br>
+        <br>
+        <div id="info">
+           Nothing here yet
         </div>
     </div>
     </body>
