@@ -26,36 +26,49 @@ socket.on('mrc-query', function (query) {
     // check the requesting host, make sure it comes to the right place
     // if (query.host == '')
     
-    var json = "{result:{database:[]}}";
-    var ret = 1;
+    // do the query
+    // query type >=99 require no response 
+    if (query.type < 99) {
+            
+        var json = "{\"result\":{\"database\":[]}}";
+        var ret = 1;
     
-    // query databases
-    if (query.type == 0) {
-        // hard coded for testing
-        var database_dir = '/Users/eric/workspace/metavine/metavine-mrc/db/files';
-        console.log("loading database from: " + database_dir);
-        
-        glob(database_dir + "/*", 'nonull', function(er, files) {
-            json = "{result:{";
-            json += "database:[" + files.join(",") + "]"; 
-            json += "}";
-        });
+        if (query.type == 0) {
+            // hard coded for testing
+            var database_dir = '/Users/eric/workspace/metavine/metavine-mrc/db/files';
+            console.log("loading database from: " + database_dir);
+            
+            glob(database_dir + "/*", function(er, files) {
+                json = "{\"result\":{";
+                json += "\"database\":[";
+                
+                var list = "";
+                for (var i = 0; i < files.length; i++) {
+                    if (i > 0)
+                        list += ','; //list.concat(',');
+                    list += "\"" + files[i] + "\"";
+                }
+                json += list; //files.join(",") +;
+                json += "]}}"; 
+                
+                socket.emit("mrc-result", {success:ret, json:json});
+            });
+            
+        }
+        // query tables
+        else if (query.type == 1) {
+            
+        }
+        // query with sql
+        else if (query.type = 2) {
+            
+        }
+        else {
+            ret = 0;
+            json = "{\"result\": \"error - unknown query type\"}";
+        }
         
     }
-    // query tables
-    else if (query.type == 1) {
-        
-    }
-    // query with sql
-    else if (query.type = 2) {
-        
-    }
-    else {
-        ret = 0;
-        json = "{result: \"error - unknown query type\"}";
-    }
-    
-    socket.emit("mrc-result", {success:ret, json:json});
 });
 /*// on every message recived we print the new datas inside the #container div
 socket.on('notification', function (data) {
