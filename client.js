@@ -31,13 +31,14 @@ socket.on('mrc-query', function (query) {
     
     // query databases
     if (query.type == 0) {
-                // hard coded for testing
+        // hard coded for testing
         var database_dir = '/Users/eric/workspace/metavine/metavine-mrc/db/files';
         glob(database_dir + "/*", 'nonull', function(er, files) {
             json = "{result:{";
             json += "database:[" + files.join(",") + "]"; 
             json += "}";
         });
+        
     }
     // query tables
     else if (query.type == 1) {
