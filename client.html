@@ -18,6 +18,10 @@
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
     <script src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
     <script>
+    // functions
+    function basename(path) {
+        return path.split('/').reverse()[0];
+    }
     // definitions
     var client = {type:1, id:2, name:"web-prototype"};
     
@@ -50,9 +54,14 @@
         $('time').html('Last Update:' + new Date());
     });*/
     socket.on('app-result', function (result) {
-        console.log("result from web server recieved.");
+        console.log("result from web server recieved: " + result.json);
         var _data = JSON.parse(result.json);
         
+        for (var i = 0; i < _data.result.database.length; ++i) {
+            var name = _data.result.database[i];
+            var bn = basename(name);
+            $('#singleSelect').append($('<option value="' + bn + '">').text(name));
+        }
         // $('#container').html(_data);
         $('#info').html(result.json);
         //$('#singleSelect').append($('<option>').text(_data));
@@ -60,25 +69,35 @@
     
     $( document ).ready(function() {
         console.log( "ready!" );
-        socket.emit("app-query", {type:0, host:"eric-s-mac", info:"can I get some database info please"});
+        // 
+        $("#btnSubmit").click(function(){
+            //alert("button");
+            socket.emit("app-query", {type:0, host:"eric-s-mac", info:"can I get some database info please"});
+        });
     });
     </script>
     
-    <div ng-app="">View SQLite databases stored on Eric's Mac
+    <div ng-app="">
+        <div>View SQLite databases stored on Eric's Mac</div>
         <br>
         <br>
         <div>
+            
+        <div><input id = "btnSubmit" type="submit" value="List Database(s)"/>
+<br> <br> <br>  </div>
         <select name="singleSelect" id="singleSelect" ng-model="data.singleSelect">
             <option value="">---Please select database ---</option> <!-- not selected / blank option -->
-            
-            <option value="{{data.option1}}">Database 1</option> <!-- interpolation -->
+            <!-- interpolation -->
+            <!--
+            <option value="{{data.option1}}">Database 1</option> 
             <option value="option-2">Database 2</option>
+            -->
         </select>
         </div>
         
         <br>
         <br>
-        <div id="info">
+        <div id="info" style="border:3px; border-style:solid; border-color:#287EC7; padding: 1em;background-color: #f1f5f9;">
            Nothing here yet
         </div>
     </div>

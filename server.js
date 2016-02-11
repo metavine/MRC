@@ -1,6 +1,6 @@
 var app = require('http').createServer(handler),
   io = require('socket.io').listen(app),
-  parser = new require('xml2json'),
+  parser = require('xml2json'),
   fs = require('fs');
 
 // creating the server ( localhost:9999 )
@@ -23,7 +23,7 @@ function handler(req, res) {
 
 // maintain a request table for whom is requesting what
 // 1 success, 
-var result = {success:0, json:"{result:\"\"}"};
+var result = {success:0, json:"{\"result\":\"\"}"};
           
 var app_client_id = null;
 var mrc_client_id = null;
@@ -74,7 +74,7 @@ io.sockets.on('connection', function(socket) {
       
       // at the moment we only X types of query
       if (query.type >= 0 && query.type <=5) {
-          console.log("query type verified, senting it to " + mrc_client_id);
+          console.log("query type verified, sending it to " + mrc_client_id);
           
           io.to(mrc_client_id).emit('mrc-query', query);
       }
@@ -92,7 +92,7 @@ io.sockets.on('connection', function(socket) {
   // and then passing it on to Metavine App
   // find the right web client to send the result to
   socket.on('mrc-result', function(result) {
-      console.log("result from MRC recieved.");
+      console.log("result from MRC recieved: " + result.json);
     //   var json = null;
       
 /*      if (data.type == 1) {
