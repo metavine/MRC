@@ -15,6 +15,11 @@ socket.emit('register', client);
 // 3. verify client, make sure it is a legit client that is authenticated
 // TODO
 
+<<<<<<< HEAD
+// 2. verify client, make sure it is a legit client that is authenticated
+socket.on
+
+=======
 // 4. events
 socket.on('mrc-query', function (query) {
     
@@ -47,6 +52,7 @@ socket.on('mrc-query', function (query) {
     
     socket.emit("mrc-result", {success:ret, json:json});
 });
+>>>>>>> e5d3a8208fac6fdfbec0f45ab6cdc82e4cd61134
 /*// on every message recived we print the new datas inside the #container div
 socket.on('notification', function (data) {
     // convert the json string into a valid javascript object

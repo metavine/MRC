@@ -36,9 +36,8 @@
     //     * load-table, table name, all records limits 50
     //     * query-table, sql
     //     * show-table, table result in json
-    
     socket.emit("mrc-query", {type:0, host:"eric-s-mac"});
-    
+        
     // 3.2 waiting for displaying data from remote client (yes, the real one)
     // on every message recived we print the new datas inside the #container div
 /*    socket.on('notification', function (data) {
@@ -48,6 +47,13 @@
         $('#container').html(_data.test.sample);
         $('time').html('Last Update:' + new Date());
     });*/
+    socket.on('app-result', function (result) {
+        console.log("result from web server recieved.");
+        var _data = JSON.parse(result.json);
+        
+        // $('#container').html(_data);
+        $('#singleSelect').append($('<option>').text(_data));
+    });
     </script>
     
     <div ng-app="">View SQLite databases stored on Eric's Mac
@@ -56,6 +62,7 @@
         <div>
         <select name="singleSelect" id="singleSelect" ng-model="data.singleSelect">
             <option value="">---Please select database ---</option> <!-- not selected / blank option -->
+            
             <option value="{{data.option1}}">Database 1</option> <!-- interpolation -->
             <option value="option-2">Database 2</option>
         </select>

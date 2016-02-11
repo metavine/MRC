@@ -1,0 +1,25 @@
+== App Type ==
+
+=== Sample ===
+{
+	type: 1,
+	id: 12,
+	name: "mrc-client-infoblox",
+	key: "aaw2343afsw2rerwewfwewyhhh2faaa823rrjslfsyonaalfj2wsf2ohf7tavmw"
+}
+
+== Query ==
+
+=== Query Type ===
+1 
+2
+3
+
+=== Sample ===
+{
+	query: 1,
+	action: 1,
+	
+}
+
+
