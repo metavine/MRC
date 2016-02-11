@@ -52,8 +52,24 @@ io.sockets.on('connection', function(socket) {
       }
   });
 
-  socket.on('query-table', function(msg) {
-
+  // on recieving query from web client / Metavine App
+  socket.on('mrc-query', function(query) {
+  });
+  
+  // on recieving result from MRC
+  // find the right web client to send the result to
+  socket.on('mrc-result', function(result) {
+    //   var json = null;
+      
+/*      if (data.type == 1) {
+          
+      }
+      else {
+          json = "{\"result\": \"error - unknown query type\"}";
+      }*/
+      //TODO
+      // reponse to the right web client 
+      socket.volatile.emit("app-result", result);
   });
   
   // OK, wait for a while for the client registration
