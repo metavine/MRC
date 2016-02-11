@@ -1,4 +1,5 @@
 var io = require('socket.io-client');
+var glob = require('glob');
 
 var client = {type:1, id:2, name:"mrc-prototype"};
 
@@ -15,21 +16,28 @@ socket.emit('register', client);
 // TODO
 
 // 4. events
-socket.on('mrc-query', function (data) {
+socket.on('mrc-query', function (query) {
     
     var json = null;
     var ret = 1;
     
     // query databases
-    if (data.type == 0) {
+    if (query.type == 0) {
+        // hard coded for testing
+        var database_dir = '/Users/eric/workspace/metavine/metavine-mrc/db/files';
+        glob(database_dir + "/*", 'nonull', function(er, files) {
+            json = "{result:{";
+            json += "database:[" + files.join(",") + "]"; 
+            json += "}";
+        });
         
     }
     // query tables
-    else if (data.type == 1) {
+    else if (query.type == 1) {
         
     }
     // query with sql
-    else if (data.type = 2) {
+    else if (query.type = 2) {
         
     }
     else {

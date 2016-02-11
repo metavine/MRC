@@ -22,6 +22,8 @@ function handler(req, res) {
 }
 
 // maintain a request table for whom is requesting what
+// 1 success, 
+var result = {success:0, json:"{result:\"\"}"};
 
 // creating a new websocket then wait for connection
 io.sockets.on('connection', function(socket) {
@@ -53,12 +55,27 @@ io.sockets.on('connection', function(socket) {
   });
 
   // on recieving query from web client / Metavine App
-  socket.on('mrc-query', function(query) {
+  socket.on('app-query', function(query) {
+      // database
+      if (query.type == 0) {
+          socket.emit('mrc-query', query);
+      }
+      else if (query.type ==12) {
+          
+      }
+      else {
+          var _json = "{\"result\": \"error - unknown query type\"}";
+          result.json = _json;
+          // do nothing
+          socket.volatile.emit("app-result", result);
+      }
   });
   
   // on recieving result from MRC
+  // and then passing it on to Metavine App
   // find the right web client to send the result to
   socket.on('mrc-result', function(result) {
+      console.log("result from MRC recieved.");
     //   var json = null;
       
 /*      if (data.type == 1) {

@@ -37,15 +37,17 @@
     //     * query-table, sql
     //     * show-table, table result in json
     
+    socket.emit("mrc-query", {type:0, host:"eric-s-mac"});
+    
     // 3.2 waiting for displaying data from remote client (yes, the real one)
     // on every message recived we print the new datas inside the #container div
-    socket.on('notification', function (data) {
+/*    socket.on('notification', function (data) {
         // convert the json string into a valid javascript object
         var _data = JSON.parse(data);
 
         $('#container').html(_data.test.sample);
         $('time').html('Last Update:' + new Date());
-    });
+    });*/
     </script>
     
     <div ng-app="">View SQLite databases stored on Eric's Mac
